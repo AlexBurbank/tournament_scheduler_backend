@@ -31,7 +31,9 @@ namespace tournament_scheduler.Controllers
         [Route("{tournament_id}/info")]
         public async Task<ObjectResult> GetTournamentInfo([FromRoute] int tournament_id)
         {
-            var tournamentInfo = await _db.GetTournamentInfo();
+            //var tournamentInfo = await _db.GetTournamentInfo();
+
+            var tournamentInfo = new TournamentInfo(0, "Filler data", new DateTime(), new DateTime(), new List<ScoringRule>());
 
             return StatusCode(200, tournamentInfo);
         }
