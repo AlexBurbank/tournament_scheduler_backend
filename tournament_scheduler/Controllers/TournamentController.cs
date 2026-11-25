@@ -1,11 +1,12 @@
+using dotenv.net;
 using Microsoft.AspNetCore.Mvc;
-using tournament_scheduler.Models;
 using tournament_scheduler.DatabaseLayer;
+using tournament_scheduler.Models;
 
 namespace tournament_scheduler.Controllers
 {
     [ApiController]
-    [Route("tournament")]
+    [Route("tournaments")]
     public class TournamentController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -23,6 +24,14 @@ namespace tournament_scheduler.Controllers
         public ObjectResult GetVenues([FromRoute] int tournament_id)
         {
             var response = new GetVenuesResponse();
+
+            // Load .env from the application directory into the system environment
+            DotEnv.Load();
+
+            // Read variables from .env without modifying the system environment
+            var envVars = DotEnv.Read();
+
+            Console.WriteLine(envVars["DefaultConnection"]);
 
             return StatusCode(200, response);
         }

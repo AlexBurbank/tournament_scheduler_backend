@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using dotenv.net;
+using Npgsql;
 using System.ComponentModel;
 using tournament_scheduler.Models;
 
@@ -10,7 +11,12 @@ namespace tournament_scheduler.DatabaseLayer
 
         public Db(IConfiguration configuration)
         {
-            connString = configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException(nameof(configuration));
+            DotEnv.Load();
+
+            // Read variables from .env without modifying the system environment
+            var envVars = DotEnv.Read();
+
+            Console.WriteLine(envVars["ConnectionString"]);
         }
 
         public async Task<GetVenuesResponse> GetTournamentVenueInfo()
